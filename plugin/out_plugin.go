@@ -112,14 +112,20 @@ type Record = map[interface{}]interface{}
 type Plugin struct{}
 
 func (p *Plugin) Flush(tag string, records []Record) {
-	fmt.Println("plugin Flush() start")
-	fmt.Println(records)
+	fmt.Println("[plugin] Flush() start")
+	for _, record := range records {
+		valIF := record["log"]
+		val, _ := valIF.([]byte)
+		fmt.Println("[plugin] flushing: " + string(val))
+	}
+	fmt.Println("[plugin] Flush() sleep start")
 	time.Sleep(5 * time.Second)
-	fmt.Println("plugin Flush() ended")
+	fmt.Println("[plugin] Flush() sleep stop")
+	fmt.Println("[plugin] Flush() ended")
 }
 
 func (p *Plugin) Teardown() {
-	fmt.Println("plugin Teardown()")
+	fmt.Println("[plugin] Teardown()")
 }
 
 func main() {

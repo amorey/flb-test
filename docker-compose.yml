@@ -2,8 +2,7 @@ version: '3.8'
 
 services:
   flb:
-    #image: fluent/fluent-bit:1.9.9-debug
-    image: flb-test:latest
+    build: ./plugin/
     command: /fluent-bit/bin/fluent-bit -c /etc/fluent-bit/flb.conf
     volumes:
       - type: volume
@@ -13,18 +12,6 @@ services:
       - type: bind
         source: ./
         target: /etc/fluent-bit
-    networks:
-      - intranet
-
-  alpine:
-    image: alpine:latest
-    entrypoint: /bin/sleep infinity
-    stop_grace_period: 0s
-    networks:
-      - intranet
-
-networks:
-  intranet:
 
 volumes:
   flb-data:
